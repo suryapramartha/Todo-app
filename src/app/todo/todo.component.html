@@ -1,0 +1,28 @@
+<h2 style="font-weight:bold">My Todos</h2>
+  <ng-container *ngIf="listTodo as todo; else emptyData">
+      <table class="table table-striped" style="margin-top:20px;" >
+          <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                <th scope="col">Target Date</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of todo" >
+                <td>{{data.todoId}}</td>
+                <td>{{data.description }}</td>
+                <td>{{data.status}}</td>
+                <td>{{data.targetDate}}</td>
+                <td>
+                  <button class="btn btn-light">View Details</button>&nbsp;
+                  <button class="btn btn-info">Payment Detail</button>&nbsp;
+                  <button class="btn btn-danger">Delete</button>
+                </td>
+                </tr>
+            </tbody>
+      </table>
+  </ng-container>
+  <ng-template #emptyData>No Data Found</ng-template>

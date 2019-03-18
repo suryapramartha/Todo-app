@@ -7,24 +7,24 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" routerLink="">Home <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/login">Login</a>
-      </li>
-      <!-- <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" routerLink="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" routerLink="#">Action</a>
-          <a class="dropdown-item" routerLink="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" routerLink="#">Something else here</a>
-        </div>
-      </li>
-      -->
+
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown" ngbDropdown *ngIf="authService.isLoggedIn(); else anonymous">
+          <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>{{appUser | titlecase}}</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown01" ngbDropdownMenu>
+            <a class="dropdown-item" routerLink="/my/todos">My Todos</a>
+            <a class="dropdown-item item-logout" (click)="logout()" routerLink="">Logout</a>
+          </div>
+        </li>
+        <ng-template #anonymous>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/login">Login</a>
+          </li>
+        </ng-template>
+      </ul>
     </ul>
   </div>
 </div>

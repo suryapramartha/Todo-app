@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { DataService } from './../data.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -6,10 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor() { }
+  subscription: Subscription;
+  message;
+  constructor(private data: DataService) { }
 
   ngOnInit() {
+  }
+
+  getHello() {
+    this.subscription = this.data.getHello().subscribe((response: any) => {
+      this.message = response.message;
+
+    });
   }
 
 }
