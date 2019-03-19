@@ -15,6 +15,7 @@ import { TodoComponent } from './todo/todo.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from './data.service';
+import { TodoFormComponent } from './todo-form/todo-form.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { DataService } from './data.service';
     LoginComponent,
     HomeComponent,
     TodoComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    TodoFormComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +36,9 @@ import { DataService } from './data.service';
     RouterModule.forRoot([
       {path: '', component : HomeComponent},
       {path: 'login', component : LoginComponent},
+      {path: 'my/todos/:username/:id', component : TodoFormComponent, canActivate: [AuthGuardService]},
       {path: 'my/todos/:username', component : TodoComponent, canActivate: [AuthGuardService]},
+      {path: 'my/new/todos', component : TodoFormComponent, canActivate: [AuthGuardService]},
       {path: 'my/todos', component : TodoComponent, canActivate: [AuthGuardService]},
       {path: '**', component : NotFoundComponent}
     ])

@@ -1,6 +1,9 @@
-<h2 style="font-weight:bold">My Todos</h2>
+<h2 style="font-weight:bold">My Todos 
+  <button class="btn btn-outline-primary btn-sm" (click)="newTodo()">Create New Todo</button>
+</h2>
+<div class="alert alert-success" *ngIf="deletedMessage"> {{deletedMessage}}   </div>
   <ng-container *ngIf="listTodo as todo; else emptyData">
-      <table class="table table-striped" style="margin-top:20px;" >
+      <table class="table table-striped" style="margin-top:30px;" >
           <thead>
               <tr>
                 <th scope="col">ID</th>
@@ -17,9 +20,8 @@
                 <td>{{data.status}}</td>
                 <td>{{data.targetDate}}</td>
                 <td>
-                  <button class="btn btn-light">View Details</button>&nbsp;
-                  <button class="btn btn-info">Payment Detail</button>&nbsp;
-                  <button class="btn btn-danger">Delete</button>
+                  <button class="btn btn-info btn-sm" (click)="updateTodo(data.userId, data.todoId)">Update</button>&nbsp;
+                  <button class="btn btn-danger btn-sm" (click)="deleteById(data.userId, data.todoId)">Delete</button>
                 </td>
                 </tr>
             </tbody>

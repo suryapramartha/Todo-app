@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-8">
+    <form #form="ngForm"> 
+    <h2 *ngIf="!createMode; else createLabel">Update Todo</h2>
+    <ng-template #createLabel>
+        <h2>Create New Todo</h2>
+    </ng-template>
+
+    <input #username="ngModel" [(ngModel)]="data.userId" name="username" type="text" class="form-control" id="username" hidden>
+   
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input #description="ngModel" [(ngModel)]="data.description" name="description" type="text" class="form-control" id="description" required>
+      <div class="alert alert-danger" *ngIf="description.touched && description.invalid">
+          Description is required   
+       </div>
+    </div>
+
+    <div class="form-group">
+        <label for="status">Status</label>
+        <select #status="ngModel" [(ngModel)]="data.status" name="status" class="form-control" id="status" required> 
+          <option value="">-- Select --</option>
+          <option *ngFor="let c of statusCombobox" [value]="c.name">{{c.name}}</option>
+        </select>
+        <div class="alert alert-danger" *ngIf="status.touched && status.invalid">
+            Status is required   
+         </div>
+      </div>
+
+    <div class="form-group">
+      <label for="targetDate">Target Date</label>
+      <input #targetDate="ngModel" [(ngModel)]="data.targetDate" name="targetDate" type="date" class="form-control" id="targetDate" required 
+      >
+      <div class="alert alert-danger" *ngIf="targetDate.touched && targetDate.invalid">
+          Target Date is required   
+       </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="updateData()" *ngIf="!createMode; else createButton">
+      Update
+    </button> 
+    <ng-template #createButton>
+        <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="createData()">
+            Create
+          </button> 
+    </ng-template>
+  </form>
+  </div>
+</div>

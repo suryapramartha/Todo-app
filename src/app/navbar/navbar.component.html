@@ -1,30 +1,29 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
   <a class="navbar-brand" routerLink="">Todo App</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="isCollapsed = !isCollapsed" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" routerLink="">Home <span class="sr-only">(current)</span></a>
       </li>
-
+    </ul>
       <ul class="navbar-nav">
         <li class="nav-item dropdown" ngbDropdown *ngIf="authService.isLoggedIn(); else anonymous">
-          <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>{{appUser | titlecase}}</a>
+          <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>{{authService.user | titlecase}}</a>
           <div class="dropdown-menu" aria-labelledby="dropdown01" ngbDropdownMenu>
             <a class="dropdown-item" routerLink="/my/todos">My Todos</a>
             <a class="dropdown-item item-logout" (click)="logout()" routerLink="">Logout</a>
           </div>
         </li>
-        <ng-template #anonymous>
+          <ng-template #anonymous>
           <li class="nav-item">
             <a class="nav-link" routerLink="/login">Login</a>
           </li>
         </ng-template>
-      </ul>
     </ul>
   </div>
 </div>
