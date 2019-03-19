@@ -1,5 +1,5 @@
-import { AuthGuardService } from './auth-guard.service';
-import { AuthService } from './auth.service';
+import { AuthGuardService } from './services/auth-guard.service';
+import { AuthService } from './services/auth.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
@@ -7,15 +7,15 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { HomeComponent } from './core/home/home.component';
+import { LoginComponent } from './core/login/login.component';
+import { NavbarComponent } from './core/navbar/navbar.component';
 import { FormsModule} from '@angular/forms';
-import { TodoComponent } from './todo/todo.component';
-import { NotFoundComponent } from './not-found/not-found.component';
+import { TodoComponent } from './todos/todo/todo.component';
+import { NotFoundComponent } from './core/not-found/not-found.component';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { DataService } from './data.service';
-import { TodoFormComponent } from './todo-form/todo-form.component';
+import { DataService } from './services/data.service';
+import { TodoFormComponent } from './todos/todo-form/todo-form.component';
 
 @NgModule({
   declarations: [
