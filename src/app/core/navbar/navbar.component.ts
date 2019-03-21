@@ -1,6 +1,5 @@
 import { AuthService } from '../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +11,7 @@ export class NavbarComponent implements OnInit {
   isLoggedIn: boolean;
   isCollapsed = false;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -20,7 +19,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    sessionStorage.removeItem('username');
+    this.authService.logout();
   }
 
 }

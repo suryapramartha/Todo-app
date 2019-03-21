@@ -16,12 +16,15 @@
           Password is required   
        </div>
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="login()">
+    <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="loginWithJWTAuth()">
       Sign In
     </button> 
   </form><br>
   <div class="alert alert-danger" *ngIf="isValid === false">
     {{errorMessage}}   
  </div>
+  <div class="alert alert-info" *ngIf="status">
+  {{status}}   
+  </div>
   </div>
 </div>

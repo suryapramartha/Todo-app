@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -10,15 +11,19 @@ import { Subscription } from 'rxjs';
 export class HomeComponent implements OnInit {
   subscription: Subscription;
   message;
-  constructor(private data: DataService) { }
+  logged;
+  constructor(private data: DataService, private authService: AuthService) { }
 
   ngOnInit() {
+    this.logged = sessionStorage.getItem('username');
   }
 
   getHello() {
     this.subscription = this.data.getHello().subscribe((response: any) => {
       this.message = response.message;
 
+    }, (error: Response) => {
+      this.authService.logoutWithStatus(error.status);
     });
   }
 

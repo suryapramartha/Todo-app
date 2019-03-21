@@ -1,21 +1,63 @@
+import { API_URL } from './../app.constants';
 import { Injectable } from '@angular/core';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private username = 'suryapramartha';
-  private password = 'password';
   public user;
-  constructor() { }
+  private errorStatus;
+  constructor(private http: HttpClient, private route: Router) { }
 
-  authenticate(username, password) {
-    if (username === this.username && password === this.password) {
-      sessionStorage.setItem('username', username);
-      return true;
-    } else {
-      return false;
+
+  private basicAuthentication(username, password) {
+    let basicAuth = 'Basic ' + window.btoa(username + ':' + password);
+    let headers = new HttpHeaders({
+      Authorization : basicAuth
+    });
+
+    return this.http.get(`${API_URL}/basic-auth`, {headers}).pipe(
+      map(() => {
+        sessionStorage.setItem('username', username);
+        sessionStorage.setItem('token', basicAuth);
+      })
+    );
+
+  }
+
+  JWTAuthentication(user, pass) {
+    let data: any = {
+      username : user,
+      password : pass
+    };
+    return this.http.post('http://localhost:8080/authenticate' , data).pipe(
+      map((x: any) => {
+        sessionStorage.setItem('username', user);
+        sessionStorage.setItem('token', 'Bearer ' + x.token);
+      })
+    );
+  }
+
+
+  getAuthenticatedUser() {
+    return sessionStorage.getItem('username');
+  }
+
+  getToken() {
+    if (this.getAuthenticatedUser) {
+      return sessionStorage.getItem('token');
     }
+  }
+
+  setErrorStatus(status) {
+    this.errorStatus = status;
+  }
+
+  getErrorStatus() {
+    return this.errorStatus;
   }
 
   isLoggedIn() {
@@ -27,4 +69,17 @@ export class AuthService {
       return false;
     }
   }
+  logout() {
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('token');
+    this.route.navigate(['login']);
+  }
+
+  logoutWithStatus(status) {
+    this.setErrorStatus(status);
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('token');
+    this.route.navigate(['login']);
+  }
+
 }

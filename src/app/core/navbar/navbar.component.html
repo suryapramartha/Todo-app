@@ -16,7 +16,7 @@
           <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>{{authService.user | titlecase}}</a>
           <div class="dropdown-menu" aria-labelledby="dropdown01" ngbDropdownMenu>
             <a class="dropdown-item" routerLink="/my/todos">My Todos</a>
-            <a class="dropdown-item item-logout" (click)="logout()" routerLink="">Logout</a>
+            <a class="dropdown-item item-logout" (click)="logout()" >Logout</a>
           </div>
         </li>
           <ng-template #anonymous>

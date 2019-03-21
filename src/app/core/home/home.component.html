@@ -4,6 +4,6 @@
 </h2>
 
 <div>
-  <button class="btn btn-info" (click)="getHello()">Click here to say hello</button><br>
+  <button class="btn btn-info" (click)="getHello()" *ngIf="logged">Click here to say hello</button><br>
   <p>{{message}}</p>
 </div>

@@ -1,9 +1,11 @@
+import { ConfirmationDialogService } from './services/confirmation-dialog.service';
+import { HttpInterceptorService } from './services/http-interceptor.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +18,7 @@ import { NotFoundComponent } from './core/not-found/not-found.component';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from './services/data.service';
 import { TodoFormComponent } from './todos/todo-form/todo-form.component';
+import { ConfirmationDialogComponent } from './todos/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,8 @@ import { TodoFormComponent } from './todos/todo-form/todo-form.component';
     HomeComponent,
     TodoComponent,
     NotFoundComponent,
-    TodoFormComponent
+    TodoFormComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +47,17 @@ import { TodoFormComponent } from './todos/todo-form/todo-form.component';
       {path: '**', component : NotFoundComponent}
     ])
   ],
-  providers: [LoginComponent, AuthService, AuthGuardService, DataService],
+  providers: [
+    LoginComponent,
+    AuthService,
+    AuthGuardService,
+    DataService,
+    ConfirmationDialogService,
+    {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true}
+  ],
+
+  entryComponents: [ConfirmationDialogComponent],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

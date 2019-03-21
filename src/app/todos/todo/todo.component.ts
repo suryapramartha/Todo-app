@@ -1,3 +1,4 @@
+import { ConfirmationDialogService } from './../../services/confirmation-dialog.service';
 import { AuthService } from '../../services/auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../services/data.service';
@@ -17,11 +18,17 @@ export class TodoComponent implements OnInit, OnDestroy {
   userId;
   deletedMessage;
 
-  constructor(private dataService: DataService, private authService: AuthService, private router: Router) {
+  constructor(
+    private dataService: DataService,
+    private authService: AuthService,
+    private router: Router,
+    private confirmationDialogService: ConfirmationDialogService) {
     this.userId = this.authService.user;
 
     this.listSubscription = this.dataService.getTodoByUsername(this.userId).subscribe(response => {
       this.listTodo = response;
+    }, (error: Response) => {
+      this.authService.logoutWithStatus(error.status);
     });
 
   }
@@ -36,16 +43,23 @@ export class TodoComponent implements OnInit, OnDestroy {
   }
 
   deleteById(username, todoId) {
-    this.deleteSubscription = this.dataService.deleteTodoByUsername(username, todoId).subscribe(data => {
-      this.deletedMessage = 'Successfully deleted!';
-      this.listSubscription = this.dataService.getTodoByUsername(this.userId).subscribe(response => {
-        this.listTodo = response;
-      });
-      setTimeout(() => {
-        this.deletedMessage = null;
-      },
-      1500);
-    });
+    this.confirmationDialogService.confirm('Deleting item', 'Do you really want to delete this item?')
+    .then((confirm) => {
+      if (confirm) {
+        this.deleteSubscription = this.dataService.deleteTodoByUsername(username, todoId).subscribe(data => {
+          this.deletedMessage = 'Successfully deleted!';
+          this.listSubscription = this.dataService.getTodoByUsername(this.userId).subscribe(response => {
+            this.listTodo = response;
+          });
+          setTimeout(() => {
+            this.deletedMessage = null;
+          },
+          1500);
+        }, (error: Response) => {
+          this.authService.logoutWithStatus(error.status);
+        });
+      }
+    }).catch(() => console.log('cancelled'));
   }
 
   updateTodo(username, todoId) {

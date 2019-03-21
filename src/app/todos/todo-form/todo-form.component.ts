@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../services/data.service';
@@ -21,7 +22,11 @@ export class TodoFormComponent implements OnInit, OnDestroy {
     {name: 'Completed'}
   ];
 
-  constructor(private dataService: DataService, private router: ActivatedRoute, private route: Router) { }
+  constructor(
+    private dataService: DataService,
+    private router: ActivatedRoute,
+    private route: Router,
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.data.userId = sessionStorage.getItem('username');
@@ -32,6 +37,8 @@ export class TodoFormComponent implements OnInit, OnDestroy {
     } else {
       this.dataSubscription = this.dataService.getTodoDetail(username, id).subscribe(data => {
         this.data = data;
+      }, (error: Response) => {
+        this.authService.logoutWithStatus(error.status);
       });
     }
   }
@@ -49,15 +56,19 @@ export class TodoFormComponent implements OnInit, OnDestroy {
   }
 
   createData() {
-    this.createSubscription = this.dataService.createTodo(this.data).subscribe(a => {
+    this.createSubscription = this.dataService.createTodo(this.data).subscribe((a: Response) => {
       console.log(a);
       this.route.navigate(['my/todos']);
+    }, (error: Response) => {
+      this.authService.logoutWithStatus(error.status);
     });
   }
 
   updateData() {
     this.updateSubscription = this.dataService.updateTodo(this.data).subscribe(() => {
       this.route.navigate(['my/todos']);
+    }, (error: Response) => {
+      this.authService.logoutWithStatus(error.status);
     });
   }
 
