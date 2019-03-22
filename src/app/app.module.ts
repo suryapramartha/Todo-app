@@ -19,7 +19,6 @@ import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from './services/data.service';
 import { TodoFormComponent } from './todos/todo-form/todo-form.component';
 import { ConfirmationDialogComponent } from './todos/confirmation-dialog/confirmation-dialog.component';
-import { SignupComponent } from './core/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +30,6 @@ import { SignupComponent } from './core/signup/signup.component';
     NotFoundComponent,
     TodoFormComponent,
     ConfirmationDialogComponent,
-    //SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +40,6 @@ import { SignupComponent } from './core/signup/signup.component';
     RouterModule.forRoot([
       {path: '', component : HomeComponent},
       {path: 'login', component : LoginComponent},
-      //{path: 'signup', component : SignupComponent},
       {path: 'my/todos/:username/:id', component : TodoFormComponent, canActivate: [AuthGuardService]},
       {path: 'my/todos/:username', component : TodoComponent, canActivate: [AuthGuardService]},
       {path: 'my/new/todos', component : TodoFormComponent, canActivate: [AuthGuardService]},
