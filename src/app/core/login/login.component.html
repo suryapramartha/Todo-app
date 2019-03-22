@@ -18,8 +18,9 @@
     </div>
     <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="loginWithJWTAuth()">
       Sign In
-    </button> 
-  </form><br>
+    </button> <br>
+<!--     <p>Don't have an account? <a routerLink="/signup">Sign Up Here</a></p>
+ -->  </form><br>
   <div class="alert alert-danger" *ngIf="isValid === false">
     {{errorMessage}}   
  </div>
