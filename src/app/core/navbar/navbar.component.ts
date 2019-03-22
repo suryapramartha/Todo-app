@@ -11,7 +11,7 @@ export class NavbarComponent implements OnInit {
   isLoggedIn: boolean;
   isCollapsed = false;
 
-  constructor(private authService: AuthService) {
+  constructor(public authService: AuthService) {
   }
 
   ngOnInit() {
