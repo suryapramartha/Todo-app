@@ -33,7 +33,7 @@ export class AuthService {
       username : user,
       password : pass
     };
-    return this.http.post('http://localhost:8080/authenticate' , data).pipe(
+    return this.http.post(`${API_URL}/authenticate` , data).pipe(
       map((x: any) => {
         sessionStorage.setItem('username', user);
         sessionStorage.setItem('token', 'Bearer ' + x.token);
