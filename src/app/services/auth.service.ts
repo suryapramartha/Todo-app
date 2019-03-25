@@ -1,4 +1,4 @@
-import { API_URL } from './../app.constants';
+import { API_URL_LOCAL } from './../app.constants';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -19,7 +19,7 @@ export class AuthService {
       Authorization : basicAuth
     });
 
-    return this.http.get(`${API_URL}/basic-auth`, {headers}).pipe(
+    return this.http.get(`${API_URL_LOCAL}/basic-auth`, {headers}).pipe(
       map(() => {
         sessionStorage.setItem('username', username);
         sessionStorage.setItem('token', basicAuth);
@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   createUsers(data) {
-    return this.http.post(`${API_URL}/auth/signup`, data);
+    return this.http.post(`${API_URL_LOCAL}/auth/signup`, data);
   }
 
   JWTAuthentication(user, pass) {
@@ -37,7 +37,7 @@ export class AuthService {
       username : user,
       password : pass
     };
-    return this.http.post(`${API_URL}/auth/signin` , data).pipe(
+    return this.http.post(`${API_URL_LOCAL}/auth/signin` , data).pipe(
       map((x: any) => {
         sessionStorage.setItem('username', user);
         sessionStorage.setItem('token', 'Bearer ' + x.token);
