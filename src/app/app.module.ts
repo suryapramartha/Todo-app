@@ -20,6 +20,7 @@ import { DataService } from './services/data.service';
 import { TodoFormComponent } from './todos/todo-form/todo-form.component';
 import { ConfirmationDialogComponent } from './todos/confirmation-dialog/confirmation-dialog.component';
 import { SignupComponent } from './core/signup/signup.component';
+import { SignupSuccessComponent } from './core/signup/signup-success/signup-success.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { SignupComponent } from './core/signup/signup.component';
     NotFoundComponent,
     TodoFormComponent,
     ConfirmationDialogComponent,
-    SignupComponent
+    SignupComponent,
+    SignupSuccessComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,8 @@ import { SignupComponent } from './core/signup/signup.component';
     RouterModule.forRoot([
       {path: '', component : HomeComponent},
       {path: 'login', component : LoginComponent},
-      //{path: 'signup', component : SignupComponent},
+      {path: 'signup/:username', component : SignupSuccessComponent},
+      {path: 'signup', component : SignupComponent},
       {path: 'my/todos/:username/:id', component : TodoFormComponent, canActivate: [AuthGuardService]},
       {path: 'my/todos/:username', component : TodoComponent, canActivate: [AuthGuardService]},
       {path: 'my/new/todos', component : TodoFormComponent, canActivate: [AuthGuardService]},

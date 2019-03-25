@@ -28,12 +28,16 @@ export class AuthService {
 
   }
 
+  createUsers(data) {
+    return this.http.post(`${API_URL}/auth/signup`, data);
+  }
+
   JWTAuthentication(user, pass) {
     let data: any = {
       username : user,
       password : pass
     };
-    return this.http.post(`${API_URL}/authenticate` , data).pipe(
+    return this.http.post(`${API_URL}/auth/signin` , data).pipe(
       map((x: any) => {
         sessionStorage.setItem('username', user);
         sessionStorage.setItem('token', 'Bearer ' + x.token);
